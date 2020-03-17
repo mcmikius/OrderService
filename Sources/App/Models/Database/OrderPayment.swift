@@ -13,7 +13,7 @@ final class OrderPayment: Model, Content {
     
     @ID(key: "id")
     var id: Int?
-
+    
     @Field(key: "totalAmount")
     var totalAmount: Int
     
@@ -22,7 +22,14 @@ final class OrderPayment: Model, Content {
     
     @Field(key: "method")
     var method: String
-
+    
+    // 0 = initiated
+    // 1 = authorized
+    // 2 = rejected
+    // 3 = charged
+    @Field(key: "status")
+    var status: Int
+    
     @Timestamp(key: "createdAt", on: .create)
     var createdAt: Date?
     
@@ -33,7 +40,7 @@ final class OrderPayment: Model, Content {
     var deletedAt: Date?
     
     init() { }
-
+    
     init(
         id: Int? = nil,
         totalAmount: Int,
