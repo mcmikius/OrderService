@@ -27,16 +27,19 @@ final class ProcessingController {
         
         return self.getProductInformation(productIds: productIds, client: app.client).flatMap { (products:[Product]) -> EventLoopFuture<Bool> in
             var total = 0
+            var totalTax = 0
             for item in order.items {
                 for product in products {
                     if product.id == item.productId {
                         total = total + product.unitPrice * item.quantity
+                        totalTax = totalTax + (product.unitPrice * product.tax * item.quantity)
                     }
                 }
             }
             if total != expectedTotal {
-                return app.eventLoopGroup.next().makeFailedFuture(OrderError.totalsNotMatching)
+                return app.make(EventLoop.self).makeFailedFuture(OrderError.totalsNotMatching)
             }
+            order.totalTax = totalTax
             order.totalAmount = total
             order.status = 1
             return order.save(on: app.db).transform(to: true)

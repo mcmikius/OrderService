@@ -20,6 +20,9 @@ final class OrderItem: Model, Content {
     @Field(key: "totalAmount")
     var totalAmount: Int
     
+    @Field(key: "taxAmount")
+    var taxAmount: Int
+    
     @Field(key: "productId")
     var productId: Int
 

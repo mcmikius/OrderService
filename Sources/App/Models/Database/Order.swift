@@ -19,6 +19,9 @@ final class Order: Model, Content {
 
     @Field(key: "paidAmount")
     var paidAmount: Int
+    
+    @Field(key: "taxAmount")
+    var taxAmount: Int
 
     @Field(key: "userId")
     var userId: Int
